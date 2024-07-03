@@ -22,6 +22,8 @@ body {
     background-color: #fff;
     border-radius: 30px;
     padding: 20px;
+    height: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar-header {
@@ -51,101 +53,6 @@ body {
     background-color: #f8d7da;
 }
 
-.main-content {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.header {
-    display: flex;
-    align-items: center;
-}
-
-.circle {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: inline-block;
-}
-
-.circle-red {
-    background-color: #ED6B5D;
-}
-
-.circle-yellow {
-    background-color: #F4BE50;
-}
-
-.circle-green {
-    background-color: #61C554;
-}
-
-.rectangular-bar {
-    height: 5px;
-    background-color: #F1F1F1;
-    flex-grow: 1;
-}
-
-.input-area {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#category-input,
-#task-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #e0e0e0;
-    border-radius: 5px;
-}
-
-#add-task-btn,
-#add-category-btn {
-    padding: 10px 20px;
-    background-color: #ff6f61;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#add-task-bun:hover,
-#add-category-btn:hover {
-    background-color: #e55b50;
-}
-
-.task-tabs {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e0e0e0;
-}
-
-.task-tabs div {
-    cursor: pointer;
-    padding: 10px 20px;
-}
-
-.task {
-    background-color: #f7f8fa;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.task-done {
-    text-decoration: line-through;
-    color: #888;
-}
-
 .nav-item.d-flex.align-items-center {
     display: flex;
     align-items: center;
@@ -163,4 +70,144 @@ body {
 
 #category-list .nav-link {
     margin-left: 20px;
+}
+
+.dropdown-toggle::after {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .255em;
+    vertical-align: .255em;
+    content: "";
+    border-top: .3em solid;
+    border-right: .3em solid transparent;
+    border-bottom: 0;
+    border-left: .3em solid transparent;
+}
+
+.dropdown-menu {
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu a.dropdown-item {
+    color: #6c757d;
+    font-size: 14px;
+    padding: 8px 12px;
+    transition: background-color 0.3s ease;
+    border-radius: 5px;
+}
+
+.dropdown-menu a.dropdown-item:hover,
+.dropdown-menu a.dropdown-item:focus {
+    background-color: #f8d7da;
+    color: #ff6f61;
+    text-decoration: none;
+}
+
+.dropdown-menu a.dropdown-item:first-child {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.dropdown-menu a.dropdown-item:last-child {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.main-content {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+}
+
+.circle {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.rectangular-bar {
+    height: 10px;
+    width: 50px;
+}
+
+.input-area {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#task-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+}
+
+#add-task-btn {
+    padding: 10px 20px;
+    background-color: #ff6f61;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+#add-task-btn:hover {
+    background-color: #e55b50;
+}
+
+.task-area {
+    margin-top: 20px;
+}
+
+.task-tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    position: absolute;
+}
+
+.task-tabs .under-line {
+    margin-right: 20px;
+}
+
+.task-tabs .under-line:last-child {
+    margin-right: 0;
+}
+
+#underline {
+    position: absolute;
+    height: 2px;
+    background-color: #ff6f61;
+    transition: left 0.3s ease, width 0.3s ease, top 0.3s ease;
+}
+
+.task {
+    background-color: #f7f8fa;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-done {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.fa-solid {
+    color: #ff6f61;
+    background-color: transparent;
 }

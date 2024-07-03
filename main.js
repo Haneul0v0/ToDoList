@@ -1,146 +1,87 @@
-// DOM 요소들을 변수로 선언합니다.
-let taskInput = document.getElementById("task-input"); // 할 일 입력 input 요소
-let categoryInput = document.getElementById("category-input"); // 카테고리 입력 input 요소
-let addTButton = document.getElementById("add-task-btn"); // 할 일 추가 버튼
-let addCButton = document.getElementById("add-categories-btn"); // 카테고리 추가 버튼
-let tabsContainer = document.querySelector(".task-tabs"); // 할 일 필터링 탭들을 포함하는 컨테이너
-let categoryListContainer = document.getElementById("category-list"); // 사이드바 카테고리 목록 컨테이너
+let taskInput = document.getElementById("task-input");
+let addTButton = document.getElementById("add-task-btn");
+let categoryInput = document.getElementById("category-input");
+let addCButton = document.getElementById("add-categories-btn");
 
-let taskList = []; // 할 일 목록 배열
-let filteredTasks = []; // 필터링된 할 일 목록 배열
-let categories = ["General"]; // 초기 카테고리 목록 배열 (기본값: General)
+let taskList = [];
+let categoryList = ["General"];
+let mode = "all";
+let filteredTasks = [];
 
-let mode = 'all'; // 초기 모드 설정 (기본값: 모든 할 일 보기)
-
-// 카테고리를 추가하는 함수입니다.
-function addCategory() {
-    let categoryContent = categoryInput.value.trim();
-
-    if (categoryContent === "") {
-        alert("카테고리 이름을 입력하세요.");
-        return;
-    }
-
-    if (categories.includes(categoryContent)) {
-        alert("이미 존재하는 카테고리입니다.");
-        return;
-    }
-
-    categories.push(categoryContent);
-
-    // 카테고리 탭과 사이드바의 카테고리 목록을 업데이트합니다.
-    updateCategoryTabs();
+function render() {
     updateSidebarCategories();
-
-    // 입력 필드를 비웁니다.
-    categoryInput.value = "";
-
-    // 모달 창을 닫습니다.
-    let categoryModal = bootstrap.Modal.getInstance(document.getElementById('categoryModal'));
-    if (categoryModal) {
-        categoryModal.hide();
-    }
-
-    render();
+    renderTasks();
 }
 
-// 카테고리 탭을 업데이트하는 함수입니다.
-function updateCategoryTabs() {
-    let tabsHTML = `<div id="filtering-tabs">`;
-
-    // 필터링 탭 추가
-    tabsHTML += `<div id="all">All</div>`;
-    tabsHTML += `<div id="ongoing">Not Done</div>`;
-    tabsHTML += `<div id="done">Done</div>`;
-
-    // 각 카테고리 탭 추가
-    categories.forEach(category => {
-        tabsHTML += `<div id="${category}">${category}</div>`;
-    });
-
-    tabsHTML += `</div>`;
-    tabsContainer.innerHTML = tabsHTML;
-
-    // 각 탭에 클릭 이벤트 리스너를 추가합니다.
-    tabsContainer.querySelectorAll("div").forEach(tab => {
-        tab.addEventListener("click", function (event) {
-            filterTasks(event.target.id); // 클릭된 탭에 따라 할 일 목록을 필터링합니다.
-        });
-    });
-}
-
-// 사이드바의 카테고리 목록을 업데이트하는 함수입니다.
-function updateSidebarCategories() {
-    categoryListContainer.innerHTML = '';
-
-    categories.forEach(category => {
-        addCategoryToSidebar(category);
-    });
-}
-
-// 카테고리를 사이드바에 추가하는 함수입니다.
-function addCategoryToSidebar(category) {
-    if (category === "General") return;
-
-    let categoryItem = document.createElement('li');
-    categoryItem.className = 'nav-item';
-
-    let linkElement = document.createElement('a');
-    linkElement.className = 'nav-link';
-    linkElement.href = '#';
-    linkElement.textContent = category;
-
-    categoryItem.appendChild(linkElement);
-
-    linkElement.addEventListener('click', function () {
-        deleteCategory(category);
-    });
-
-    categoryListContainer.appendChild(categoryItem);
-}
-
-// 카테고리를 삭제하는 함수입니다.
-function deleteCategory(category) {
-    if (category === "General") {
-        alert("기본 카테고리는 삭제할 수 없습니다.");
-        return;
-    }
-
-    categories = categories.filter(cat => cat !== category);
-    taskList = taskList.filter(task => task.category !== category);
-
-    updateCategoryTabs();
-    updateSidebarCategories();
-    render();
-}
-
-// 할 일을 추가하는 함수입니다.
 function addTask() {
     let taskContent = taskInput.value.trim();
-
-    if (taskContent === "") {
-        alert("할 일을 입력하세요.");
-        return;
+    if (taskContent !== "") {
+        let task = {
+            id: randomIDGenerate(),
+            taskContent: taskContent,
+            isComplete: false,
+            category: "General"
+        };
+        taskList.push(task);
+        taskInput.value = "";
+        render();
     }
-
-    let task = {
-        id: randomIDGenerate(),
-        taskContent: taskContent,
-        isComplete: false,
-        category: "General" // 기본적으로 General 카테고리로 설정하지 않음
-    };
-
-    taskList.push(task);
-
-    // 할 일을 추가한 후 바로 render 함수 호출
-    render();
-
-    taskInput.value = "";
 }
 
+function addCategory() {
+    let categoryName = categoryInput.value.trim();
+    if (categoryName !== "" && !categoryList.includes(categoryName)) {
+        categoryList.push(categoryName);
+        categoryInput.value = "";
+        render();
+    }
+}
 
-// 할 일 목록을 렌더링하는 함수입니다.
-function render() {
+function updateSidebarCategories() {
+    let categoryListHTML = "";
+    categoryList.forEach(category => {
+        categoryListHTML += `<li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" id="categoryDropdown-${category}" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ${category}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="categoryDropdown-${category}">
+                                    <li><a class="dropdown-item" href="#" onclick="editCategory('${category}')">수정</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="deleteCategory('${category}')">삭제</a></li>
+                                </ul>
+                            </li>`;
+    });
+    document.getElementById("category-list").innerHTML = categoryListHTML;
+}
+
+function editCategory(categoryName) {
+    let newCategoryName = prompt("새 카테고리 이름을 입력하세요:", categoryName);
+    if (newCategoryName !== null && newCategoryName.trim() !== "" && !categoryList.includes(newCategoryName.trim())) {
+        let index = categoryList.indexOf(categoryName);
+        if (index !== -1) {
+            categoryList[index] = newCategoryName.trim();
+            taskList.forEach(task => {
+                if (task.category === categoryName) {
+                    task.category = newCategoryName.trim();
+                }
+            });
+            render();
+        }
+    }
+}
+
+function deleteCategory(categoryName) {
+    if (confirm(`정말로 '${categoryName}' 카테고리를 삭제하시겠습니까?`)) {
+        categoryList = categoryList.filter(category => category !== categoryName);
+        taskList.forEach(task => {
+            if (task.category === categoryName) {
+                task.category = "General";
+            }
+        });
+        render();
+    }
+}
+
+function renderTasks() {
     switch (mode) {
         case 'all':
             filteredTasks = taskList;
@@ -162,8 +103,12 @@ function render() {
         resultHTML += `<div class="task">
                             <div class="task-content">${task.taskContent}</div>
                             <div>
-                                <button onclick="toggleComplete('${task.id}')">${task.isComplete ? '취소' : '완료'}</button>
-                                <button onclick="deleteTask('${task.id}')">삭제</button>
+                                <button onclick="toggleComplete('${task.id}')">
+                                    ${task.isComplete ? '<i class="fa-solid fa-rotate-left"></i>' : '<i class="fa-solid fa-check"></i>'}
+                                </button>
+                                <button onclick="deleteTask('${task.id}')">
+                                    <i class="fa-solid fa-delete-left"></i>
+                                </button>
                             </div>
                         </div>`;
     });
@@ -171,7 +116,6 @@ function render() {
     document.getElementById("task-board").innerHTML = resultHTML;
 }
 
-// 할 일 완료 상태를 토글하는 함수입니다.
 function toggleComplete(id) {
     let task = taskList.find(task => task.id === id);
     if (task) {
@@ -180,45 +124,69 @@ function toggleComplete(id) {
     }
 }
 
-// 할 일을 삭제하는 함수입니다.
 function deleteTask(id) {
     taskList = taskList.filter(task => task.id !== id);
     render();
 }
 
-// 할 일 필터링 함수
-function filterTasks(mode) {
-    switch (mode) {
-        case 'all':
-            filteredTasks = taskList;
-            break;
-        case 'ongoing':
-            filteredTasks = taskList.filter(task => !task.isComplete);
-            break;
-        case 'done':
-            filteredTasks = taskList.filter(task => task.isComplete);
-            break;
-        default:
-            filteredTasks = taskList.filter(task => task.category === mode);
-            break;
-    }
-
-    render();
+function filterTasks(selectedMode) {
+    mode = selectedMode;
+    renderTasks();
 }
 
-
-// 랜덤 ID를 생성하는 함수입니다.
 function randomIDGenerate() {
     return '_' + Math.random().toString(36).substr(2, 9);
 }
 
-// 이벤트 리스너 설정을 초기화합니다.
 function setupEventListeners() {
     addTButton.addEventListener('click', addTask);
     addCButton.addEventListener('click', addCategory);
+
+    taskInput.addEventListener('focus', function () {
+        taskInput.value = "";
+    });
+
+    categoryInput.addEventListener('focus', function () {
+        categoryInput.value = "";
+    });
+
+    document.getElementById('all').addEventListener('click', function () {
+        filterTasks('all');
+    });
+
+    document.getElementById('ongoing').addEventListener('click', function () {
+        filterTasks('ongoing');
+    });
+
+    document.getElementById('done').addEventListener('click', function () {
+        filterTasks('done');
+    });
+
+    render();
 }
 
-setupEventListeners();
-updateCategoryTabs();
-updateSidebarCategories();
-render();
+document.addEventListener('DOMContentLoaded', () => {
+    setupEventListeners();
+
+    const taskTabs = document.querySelectorAll("#all, #ongoing, #done");
+    const underLine = document.getElementById("underline");
+    
+    taskTabs.forEach(tab => {
+        tab.addEventListener("click", taskTabsIndicator);
+    });
+
+    taskTabs[0].click();
+});
+
+function taskTabsIndicator(e) {
+    const taskTabs = document.querySelectorAll("#all, #ongoing, #done");
+    taskTabs.forEach(tab => tab.classList.remove('active-tab'));
+    
+    const currentTab = e.currentTarget;
+    currentTab.classList.add('active-tab');
+    
+    const underLine = document.getElementById("underline");
+    underLine.style.left = currentTab.offsetLeft + "px";
+    underLine.style.width = currentTab.offsetWidth + "px";
+    underLine.style.top = currentTab.offsetTop + currentTab.offsetHeight + "px";
+}
