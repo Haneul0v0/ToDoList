@@ -72,17 +72,31 @@ body {
     margin-left: 20px;
 }
 
+#edit-category-btn {
+    background-color: #e55b50;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#edit-category-btn:hover {
+    background-color: #d04a3f;
+}
+
 .dropdown-toggle::after {
     display: inline-block;
     width: 0;
     height: 0;
-    margin-left: .255em;
-    vertical-align: .255em;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
     content: "";
-    border-top: .3em solid;
-    border-right: .3em solid transparent;
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
     border-bottom: 0;
-    border-left: .3em solid transparent;
+    border-left: 0.3em solid transparent;
 }
 
 .dropdown-menu {
@@ -98,8 +112,8 @@ body {
     border-radius: 5px;
 }
 
-.dropdown-menu a.dropdown-item:hover,
-.dropdown-menu a.dropdown-item:focus {
+.dropdown-menu a.dropdown-item:focus,
+.dropdown-menu a.dropdown-item:hover {
     background-color: #f8d7da;
     color: #ff6f61;
     text-decoration: none;
@@ -152,6 +166,7 @@ body {
     border-radius: 5px;
 }
 
+#add-categories-btn,
 #add-task-btn {
     padding: 10px 20px;
     background-color: #ff6f61;
@@ -162,18 +177,21 @@ body {
     margin-left: 10px;
 }
 
+#add-categories-btn:hover,
 #add-task-btn:hover {
     background-color: #e55b50;
 }
 
 .task-area {
+    border-radius: 10px;
+    padding: 10px;
     margin-top: 20px;
+    position: relative;
 }
 
 .task-tabs {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 10px;
+    display: flex;
     position: absolute;
 }
 
@@ -190,6 +208,16 @@ body {
     height: 2px;
     background-color: #ff6f61;
     transition: left 0.3s ease, width 0.3s ease, top 0.3s ease;
+    bottom: 0;
+    left: 0;
+}
+
+#task-board {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
 }
 
 .task {

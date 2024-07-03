@@ -14,7 +14,9 @@ function render() {
 }
 
 function addTask() {
-    let taskContent = taskInput.value.trim();
+    let taskContent = taskInput
+        .value
+        .trim();
     if (taskContent !== "") {
         let task = {
             id: randomIDGenerate(),
@@ -29,7 +31,9 @@ function addTask() {
 }
 
 function addCategory() {
-    let categoryName = categoryInput.value.trim();
+    let categoryName = categoryInput
+        .value
+        .trim();
     if (categoryName !== "" && !categoryList.includes(categoryName)) {
         categoryList.push(categoryName);
         categoryInput.value = "";
@@ -50,7 +54,9 @@ function updateSidebarCategories() {
                                 </ul>
                             </li>`;
     });
-    document.getElementById("category-list").innerHTML = categoryListHTML;
+    document
+        .getElementById("category-list")
+        .innerHTML = categoryListHTML;
 }
 
 function editCategory(categoryName) {
@@ -104,7 +110,9 @@ function renderTasks() {
                             <div class="task-content">${task.taskContent}</div>
                             <div>
                                 <button onclick="toggleComplete('${task.id}')">
-                                    ${task.isComplete ? '<i class="fa-solid fa-rotate-left"></i>' : '<i class="fa-solid fa-check"></i>'}
+                                    ${task.isComplete
+            ? '<i class="fa-solid fa-rotate-left"></i>'
+            : '<i class="fa-solid fa-check"></i>'}
                                 </button>
                                 <button onclick="deleteTask('${task.id}')">
                                     <i class="fa-solid fa-delete-left"></i>
@@ -113,7 +121,9 @@ function renderTasks() {
                         </div>`;
     });
 
-    document.getElementById("task-board").innerHTML = resultHTML;
+    document
+        .getElementById("task-board")
+        .innerHTML = resultHTML;
 }
 
 function toggleComplete(id) {
@@ -135,7 +145,10 @@ function filterTasks(selectedMode) {
 }
 
 function randomIDGenerate() {
-    return '_' + Math.random().toString(36).substr(2, 9);
+    return '_' + Math
+        .random()
+        .toString(36)
+        .substr(2, 9);
 }
 
 function setupEventListeners() {
@@ -150,17 +163,23 @@ function setupEventListeners() {
         categoryInput.value = "";
     });
 
-    document.getElementById('all').addEventListener('click', function () {
-        filterTasks('all');
-    });
+    document
+        .getElementById('all')
+        .addEventListener('click', function () {
+            filterTasks('all');
+        });
 
-    document.getElementById('ongoing').addEventListener('click', function () {
-        filterTasks('ongoing');
-    });
+    document
+        .getElementById('ongoing')
+        .addEventListener('click', function () {
+            filterTasks('ongoing');
+        });
 
-    document.getElementById('done').addEventListener('click', function () {
-        filterTasks('done');
-    });
+    document
+        .getElementById('done')
+        .addEventListener('click', function () {
+            filterTasks('done');
+        });
 
     render();
 }
@@ -170,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const taskTabs = document.querySelectorAll("#all, #ongoing, #done");
     const underLine = document.getElementById("underline");
-    
+
     taskTabs.forEach(tab => {
         tab.addEventListener("click", taskTabsIndicator);
     });
@@ -181,10 +200,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function taskTabsIndicator(e) {
     const taskTabs = document.querySelectorAll("#all, #ongoing, #done");
     taskTabs.forEach(tab => tab.classList.remove('active-tab'));
-    
+
     const currentTab = e.currentTarget;
-    currentTab.classList.add('active-tab');
-    
+    currentTab
+        .classList
+        .add('active-tab');
+
     const underLine = document.getElementById("underline");
     underLine.style.left = currentTab.offsetLeft + "px";
     underLine.style.width = currentTab.offsetWidth + "px";
