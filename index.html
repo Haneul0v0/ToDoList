@@ -7,22 +7,27 @@
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            rel="stylesheet">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="container">
-            <div class="header">
-                <h1>Todo List</h1>
-                <div class="header-controls">
-                    <div class="circle circle-red"></div>
-                    <div class="circle circle-yellow"></div>
-                    <div class="circle circle-green"></div>
-                    <div class="rectangular-bar"></div>
+        <div class="container mt-5">
+            <div class="header row">
+                <div class="col-12 d-flex align-items-center justify-content-between">
+                    <h1>Todo List</h1>
+                    <div class="header-controls">
+                        <div class="circle circle-red"></div>
+                        <div class="circle circle-yellow"></div>
+                        <div class="circle circle-green"></div>
+                        <div class="rectangular-bar"></div>
+                    </div>
                 </div>
             </div>
-            <div class="row">
-                <section class="sidebar">
-                    <ul class="nav">
+            <div class="row mt-4">
+                <div class="sidebar col-md-3 mb-4 mb-md-0">
+                    <ul class="nav flex-column">
                         <li class="nav-item">
                             <div class="nav-menu" onclick="filterByDate('all')">Home</div>
                         </li>
@@ -32,36 +37,39 @@
                         <li class="nav-item">
                             <div class="nav-menu" onclick="toggleCollapse('categoryCollapse')">Category</div>
                         </li>
-                        <ul id="categoryCollapse" class="nav"></ul>
+                        <ul id="categoryCollapse" class="nav flex-column"></ul>
                     </ul>
-                </section>
-                <section class="main-content">
-                    <div class="select-section">
-                        <div class="date-area">
-                            <input type="date" id="date-input" class="date-input">
+                </div>
+                <div class="main-content col-md-9">
+                    <div class="select-section mb-4">
+                        <div class="date-area mb-3">
+                            <input type="date" id="date-input" class="form-control date-input">
                         </div>
                         <div class="category-area">
-                            <div id="category-select"></div>
+                            <div id="category-select" class="form-control"></div>
                         </div>
                     </div>
-                    <div class="input-section">
-                        <div class="input-area">
-                            <input type="text" id="task-input" class="task-input" placeholder="할 일을 입력하세요.">
-                            <button id="add-task-btn">+</button>
+                    <div class="input-section mb-4">
+                        <div class="input-area d-flex">
+                            <input type="text" id="task-input" class="form-control task-input" placeholder="할 일을 입력하세요.">
+                            <button id="add-task-btn" class="btn btn-danger ml-2">+</button>
                         </div>
                     </div>
                     <div class="task-area">
-                        <div class="task-tabs">
-                            <div id="all">모두</div>
-                            <div id="ongoing">진행중</div>
-                            <div id="done">완료</div>
+                        <div class="task-tabs d-flex mb-4">
+                            <div id="all" class="mr-3">모두</div>
+                            <div id="ongoing" class="mr-3">진행중</div>
+                            <div id="done" class="mr-3">완료</div>
                             <div id="underline"></div>
                         </div>
                         <div id="task-board"></div>
                     </div>
-                </section>
+                </div>
             </div>
         </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
         <script src="main.js"></script>
     </body>
 </html>
