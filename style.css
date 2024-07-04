@@ -1,4 +1,4 @@
-/* #e55b50 #ff6f61  #f8d7da*/
+/* 전체적인 초기화와 기본 스타일 */
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +10,7 @@ body {
     background-color: #DFDFDF;
 }
 
+/* 컨테이너 스타일 */
 .container {
     background-color: #fff;
     border-radius: 30px;
@@ -17,10 +18,14 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* 헤더 스타일 */
 .header h1 {
     color: #ff6f61;
+    font-family: "Dongle", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     font-size: 3em;
-    font-weight: bold;
+    /* font-weight: bold; */
     white-space: nowrap;
 }
 
@@ -60,6 +65,7 @@ body {
     margin-left: 20px;
 }
 
+/* 사이드바 스타일 */
 .sidebar {
     background-color: #fff;
     border-radius: 30px;
@@ -81,6 +87,14 @@ body {
     border-radius: 10px;
 }
 
+#category-board .nav-menu {
+    font-size: 1em;
+    color: #999;
+    padding: 8px;
+    cursor: pointer;
+}
+
+/* 메인 콘텐츠 스타일 */
 .main-content {
     background-color: #fff;
     border-radius: 30px;
@@ -88,6 +102,7 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* 할 일 목록 스타일 */
 .task-tabs {
     position: relative;
     display: flex;
@@ -98,12 +113,8 @@ body {
 }
 
 .task-tabs div {
+    font-weight: bold;
     margin-right: 10px;
-}
-
-.task-tabs div:hover {
-    background-color: #f8d7da;
-    color: #ff6f61;
 }
 
 .task-tabs #underline {
@@ -132,67 +143,7 @@ body {
     background-color: #f0f0f0;
 }
 
-.task-actions button {
-    margin-left: 10px;
-}
-
-.btn {
-    cursor: pointer;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-}
-
-.btn-secondary {
-    background-color: #ccc;
-    color: #555;
-}
-
-.btn-danger {
-    background-color: #ff5f56;
-    color: white;
-}
-
-.btn-danger:hover {
-    background-color: #e55b50;
-}
-
-.btn-sm {
-    padding: 5px 10px;
-    font-size: 0.8em;
-}
-
-.active {
-    background-color: #f8d7da !important;
-    color: #ff6f61 !important;
-}
-
-.select-section {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.category-area,
-.date-area {
-    flex: 1;
-    margin-bottom: 10px;
-}
-
-.category-select,
-.date-input,
-.task-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-}
-
-.input-section {
-    margin-bottom: 20px;
-}
-
+/* 입력 및 버튼 관련 스타일 */
 .input-area {
     display: flex;
     align-items: center;
@@ -217,4 +168,15 @@ body {
 
 #add-task-btn:hover {
     background-color: #ff5f56;
+}
+
+.toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+}
+
+#category-board {
+    display: none;
 }
